@@ -2,10 +2,10 @@ package com.opeh.flix.controller;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -46,6 +46,7 @@ public class VideoController {
 
 //	ATUALIZANDO UM VIDEO
 	@PutMapping("/video")
+	@Transactional
 	public Video atualizaUmVideo(@RequestBody Video video) {
 		return videoRepository.save(video);
 	}

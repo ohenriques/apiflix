@@ -6,7 +6,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
+import org.springframework.stereotype.Component;
+
+@Component
 @Entity
 @Table(name = "TB_VIDEO")
 public class Video {
@@ -16,11 +20,14 @@ public class Video {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-	@NotEmpty(message = "Please provide a name")
+	@NotEmpty
+	@Size(min = 15, max = 35, message = "O campo Titulo deve ter entre" + " 15 e 35 caracteres.")
 	private String titulo;
-	@NotEmpty(message = "Please provide a name")
+	@NotEmpty
+	@Size(min = 15, max = 120, message = "O campo Descrição deve ter entre" + " 15 e 120 caracteres.")
 	private String descricao;
-	@NotEmpty(message = "Please provide a name")
+	@NotEmpty
+	@Size(max = 35, message = "A URL é longa de mais.")
 	private String url;
 
 	public Long getId() {
