@@ -1,0 +1,1 @@
+insert into tb_video(titulo,descricao,url) values("Video 1","First Video","url url url");
