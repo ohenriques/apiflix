@@ -18,13 +18,13 @@ public class Video {
 	private static final long SerialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 	@NotEmpty
-	@Size(min = 15, max = 35, message = "O campo Titulo deve ter entre" + " 15 e 35 caracteres.")
+	@Size(min = 3, max = 35, message = "O campo Titulo deve ter entre" + " 3 e 35 caracteres.")
 	private String titulo;
 	@NotEmpty
-	@Size(min = 15, max = 120, message = "O campo Descrição deve ter entre" + " 15 e 120 caracteres.")
+	@Size(min = 3, max = 120, message = "O campo Descrição deve ter entre" + " 3 e 120 caracteres.")
 	private String descricao;
 	@NotEmpty
 	@Size(max = 35, message = "A URL é longa de mais.")
