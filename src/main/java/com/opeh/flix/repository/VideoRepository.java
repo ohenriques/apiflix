@@ -4,11 +4,11 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.opeh.flix.model.Video;
+import com.opeh.flix.model.VideoModel;
 
-public interface VideoRepository extends JpaRepository<Video, Long>{
+public interface VideoRepository extends JpaRepository<VideoModel, Long>{
 
-	Optional<Video> findById(long id);
+	Optional<VideoModel> findById(long id);
 	
 }
 
