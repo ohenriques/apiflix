@@ -1,1 +1,17 @@
-insert into tb_video(titulo,descricao,url) values("Video 1","First Video","url url url");
+insert into tb_categoria(titulo,cor,
+insert into tb_categoria(titulo,cor) values("Title 1", "White");
+insert into tb_categoria(titulo,cor) values("Title 2", "Black");
+
+SELECT * FROM tb_categoria;
+SELECT * FROM tb_video;    
+
+
+drop database flix;
+create database flix;
+use flix;
+insert into tb_categoria(titulo,cor) values("Title 1", "White");
+insert into tb_categoria(titulo,cor) values("Title 2", "Black");
+#################################
+insert into tb_video(titulo,descricao,url,idCategoria) values("Video 1", "desc 1", "http://teste.com",1);
+
+insert into tb_video(titulo,descricao,url,categoria_id_id_categoria) values("Video 1", "desc 1", "http://teste.com",1);

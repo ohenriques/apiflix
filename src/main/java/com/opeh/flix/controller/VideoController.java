@@ -3,10 +3,11 @@ package com.opeh.flix.controller;
 import java.util.List;
 import java.util.Optional;
 
-import javax.servlet.ServletRequest;
-import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,13 +20,10 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.opeh.flix.model.VideoModel;
 import com.opeh.flix.repository.VideoRepository;
 
-import static org.springframework.hateoas.server.mvc.ControllerLinkRelationProvider.
 
 @RestController
 @RequestMapping
@@ -42,6 +40,10 @@ public class VideoController {
 		if (videoList.isEmpty()) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		} else {
+			for (VideoModel video : videoList) {
+				Long id = video.getId();
+				video.add(linkTo(methodOn(VideoController.class).getOneVideo(id)).withSelfRel());
+			}
 			return new ResponseEntity<List<VideoModel>>(videoList, HttpStatus.OK);
 		}
 	}
@@ -50,12 +52,12 @@ public class VideoController {
 	@GetMapping("/video/{id}")
 	public ResponseEntity<VideoModel> getOneVideo(@PathVariable(value = "id") long id) {
 		Optional<VideoModel> videoUnico = videoRepository.findById(id);
-//		HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest();
 		if (!videoUnico.isPresent()) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		} else {
-			videoUnico.get().add(linkT)
+			videoUnico.get().add(linkTo(methodOn(VideoController.class).getAllVideos()).withRel("Lista de Vídeos"));
 			return new ResponseEntity<VideoModel>(videoUnico.get(), HttpStatus.OK);
+		
 		}
 	}
 
