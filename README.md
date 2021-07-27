@@ -29,7 +29,7 @@ Dividimos a implementação dessa feat da seguinte forma:
 Utilizei um banco de dados **MYSQL**, onde é necessário criar o DB via linha de comando(caso queira) antes de realizar testes de endpoint.
 Postman para testar os endpoints.
 
-A API está satisfazendo os três níveis de Richardson ⬇⬇⬇
+A API está satisfazendo os três níveis de Richardson ⬇⬇⬇⬇
 
 ![Imagem](https://arrayoutofindex.files.wordpress.com/2017/06/richardson-maturity-model.png?w=401&h=323)
 
