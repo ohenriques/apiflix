@@ -22,7 +22,7 @@ Dividimos a implementação dessa feat da seguinte forma:
 
 
 - Documentação via Swagger.
-- TDD
+- Teste automatizado.
 
 
 # 🧾 Considerações
