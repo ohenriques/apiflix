@@ -21,7 +21,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.opeh.flix.model.CategoriaModel;
 import com.opeh.flix.model.VideoModel;
+import com.opeh.flix.repository.CategoriaRepository;
 import com.opeh.flix.repository.VideoRepository;
 
 
@@ -32,6 +34,9 @@ public class VideoController {
 //	DEPENDENCI INJECTION JPA
 	@Autowired
 	VideoRepository videoRepository;
+	
+	@Autowired
+	CategoriaRepository categoriaRepository;
 
 //  BUSCANDO TODOS OS VÍDEOS COM TRATAMENTO CASO NÃO SEJA ENCONTRADO = ERRO 404
 	@GetMapping("/videos")
@@ -61,10 +66,10 @@ public class VideoController {
 		}
 	}
 
-	// INSERINDO UM NOVO VÍDEO CASO SEJA CRIADO COM SUCESSO = STATUS 201
+// INSERINDO UM NOVO VÍDEO CASO SEJA CRIADO COM SUCESSO = STATUS 201
 	@PostMapping("/video")
-	public ResponseEntity<VideoModel> inserindoUmNovoVideo(@Valid @RequestBody VideoModel video) {
-		return new ResponseEntity<VideoModel>(videoRepository.save(video), HttpStatus.CREATED);
+	public ResponseEntity<VideoModel> inserindoUmNovoVideo(@Valid @RequestBody VideoModel video, CategoriaModel categoria) {
+		return new ResponseEntity<VideoModel>(videoRepository.saveAll(video,categoria.getId()), HttpStatus.CREATED);
 	}
 
 //	DELETANDO UM VÍDEO

@@ -16,14 +16,14 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Entity
-@Table(name = "TB_VIDEO")
-public class VideoModel extends RepresentationModel<VideoModel>  implements Serializable {
+@Table(name = "video")
+public class VideoModel extends RepresentationModel<VideoModel> implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long idVideo;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private long id;
 	@NotEmpty
 	@Size(min = 3, max = 35, message = "O campo Titulo deve ter entre" + " 3 e 35 caracteres.")
 	private String titulo;
@@ -31,17 +31,21 @@ public class VideoModel extends RepresentationModel<VideoModel>  implements Seri
 	@Size(min = 3, max = 120, message = "O campo Descrição deve ter entre" + " 3 e 120 caracteres.")
 	private String descricao;
 	@NotEmpty
-	@Size(max = 35, message = "A URL é longa de mais.")
 	private String url;
 	@ManyToOne
-	private CategoriaModel teste1;
+	private CategoriaModel categoria;
 
+	public VideoModel(CategoriaModel categoria) {
+	this.categoria = categoria;
+	}
+	
+	
 	public Long getId() {
-		return idVideo;
+		return id;
 	}
 
 	public void setId(Long id) {
-		this.idVideo = id;
+		this.id = id;
 	}
 
 	public String getTitulo() {
@@ -60,20 +64,20 @@ public class VideoModel extends RepresentationModel<VideoModel>  implements Seri
 		this.descricao = descricao;
 	}
 
+	public CategoriaModel getCategoria() {
+		return categoria;
+	}
+
+	public void setCategoria(CategoriaModel categoria) {
+		this.categoria = categoria;
+	}
+
 	public String getUrl() {
 		return url;
 	}
 
 	public void setUrl(String url) {
 		this.url = url;
-	}
-
-	public CategoriaModel getCategoriaIdIdCategoria() {
-		return teste1;
-	}
-
-	public void setCategoriaId(CategoriaModel categoriaId) {
-		this.teste1 = categoriaId;
 	}
 
 }

@@ -11,27 +11,29 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 
+import org.springframework.hateoas.RepresentationModel;
+
 @Entity
-@Table(name = "TB_CATEGORIA")
-public class CategoriaModel implements Serializable {
+@Table(name = "categoria")
+public class CategoriaModel extends RepresentationModel<CategoriaModel> implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long idcategoria;
-	@NotEmpty
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private long id;
+	@NotEmpty(message = "O campo é obrigatório")
 	private String titulo;
-	@NotEmpty
+	@NotEmpty(message = "O campo é obrigatório")  
 	private String cor;
 	@OneToMany
-	private List<VideoModel> video;
+	private List<VideoModel> videos;
 	
 	public Long getId() {
-		return idcategoria;
+		return id;
 	}
-	public void setId(Long id) {
-		this.idcategoria = id;
+	public void setId(long id) {
+		this.id = id;
 	}
 	public String getTitulo() {
 		return titulo;
@@ -46,13 +48,6 @@ public class CategoriaModel implements Serializable {
 		this.cor = cor;
 	}
 
-	public List<VideoModel> getVideo() {
-		return video;
-	}
-
-	public void setVideo(List<VideoModel> video) {
-		this.video = video;
-	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
