@@ -1,13 +1,14 @@
 package com.opeh.flix.controller;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
-
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,9 +20,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.UriComponentsBuilder;
 
-import com.opeh.flix.model.CategoriaModel;
+import com.opeh.flix.controller.DTO.VideoDTO;
+import com.opeh.flix.controller.Form.VideoForm;
 import com.opeh.flix.model.VideoModel;
 import com.opeh.flix.repository.CategoriaRepository;
 import com.opeh.flix.repository.VideoRepository;
@@ -37,9 +41,10 @@ public class VideoController {
 	
 	@Autowired
 	CategoriaRepository categoriaRepository;
+	
 
 //  BUSCANDO TODOS OS VÍDEOS COM TRATAMENTO CASO NÃO SEJA ENCONTRADO = ERRO 404
-	@GetMapping("/videos")
+	@RequestMapping(value = "/videos", method = RequestMethod.GET)
 	public ResponseEntity<List<VideoModel>> getAllVideos() {
 		List<VideoModel> videoList = videoRepository.findAll();
 		if (videoList.isEmpty()) {
@@ -67,9 +72,18 @@ public class VideoController {
 	}
 
 // INSERINDO UM NOVO VÍDEO CASO SEJA CRIADO COM SUCESSO = STATUS 201
+//	@PostMapping("/video")
+//	public ResponseEntity<VideoModel> inserindoUmNovoVideo(@Valid @RequestBody VideoModel video) {
+//		return new ResponseEntity<VideoModel>(videoRepository.save(video), HttpStatus.CREATED);
+//	}
+	
 	@PostMapping("/video")
-	public ResponseEntity<VideoModel> inserindoUmNovoVideo(@Valid @RequestBody VideoModel video, CategoriaModel categoria) {
-		return new ResponseEntity<VideoModel>(videoRepository.saveAll(video,categoria.getId()), HttpStatus.CREATED);
+	public ResponseEntity<VideoDTO> cadastrarVideo(@RequestBody VideoForm form, UriComponentsBuilder uriBuilder) {
+		VideoModel video = form.converter(categoriaRepository);
+		videoRepository.save(video);
+		
+		URI uri = uriBuilder.path("/topico/{id}").buildAndExpand(video.getId()).toUri();
+		return ResponseEntity.created(uri).body(new VideoDTO(video));
 	}
 
 //	DELETANDO UM VÍDEO
@@ -104,8 +118,8 @@ public class VideoController {
 //// BUSCANDO TODOS OS VÍDEOS SEM TRATAMENTO DE ERRO 404
 
 //	@GetMapping("/videos")
-//	public List<Video> listaVideos() {
-//		return videoRepository.findAll();
+//	public List<VideoDTO> listaVideos() {
+//		return VideoDTO.converter(videoRepository.findAll());
 //	}
 
 ////	BUSCANDO UM ÚNICO VÍDEO

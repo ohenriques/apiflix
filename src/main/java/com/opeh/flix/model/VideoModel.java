@@ -20,9 +20,9 @@ import org.springframework.stereotype.Component;
 public class VideoModel extends RepresentationModel<VideoModel> implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-
+	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	@NotEmpty
 	@Size(min = 3, max = 35, message = "O campo Titulo deve ter entre" + " 3 e 35 caracteres.")
@@ -34,12 +34,24 @@ public class VideoModel extends RepresentationModel<VideoModel> implements Seria
 	private String url;
 	@ManyToOne
 	private CategoriaModel categoria;
-
-	public VideoModel(CategoriaModel categoria) {
-	this.categoria = categoria;
+	
+	public VideoModel() {
 	}
 	
 	
+
+	public VideoModel(
+			@NotEmpty @Size(min = 3, max = 35, message = "O campo Titulo deve ter entre 3 e 35 caracteres.") String titulo,
+			@NotEmpty @Size(min = 3, max = 120, message = "O campo Descrição deve ter entre 3 e 120 caracteres.") String descricao,
+			@NotEmpty String url, CategoriaModel categoria) {
+		this.titulo = titulo;
+		this.descricao = descricao;
+		this.url = url;
+		this.categoria = categoria;
+	}
+
+
+
 	public Long getId() {
 		return id;
 	}

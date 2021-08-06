@@ -9,10 +9,10 @@ SELECT * FROM tb_video;
 drop database flix;
 create database flix;
 use flix;
-insert into tb_categoria(titulo,cor) values("Title 1", "White");
-insert into tb_categoria(titulo,cor) values("Title 2", "Black");
-select * from tb_categoria;
-select * from tb_video;
+insert into categoria(titulo,cor) values("Video 1", "White");
+insert into categoria(titulo,cor) values("Video 2", "Black");
+select * from categoria;
+select * from video;
 
-insert into tb_video(titulo,descricao,url,categid_idcategoria) values("Video 1", "describe 1", "http://yahoo.com",1);
-insert into tb_video(titulo,descricao,url,categid_idcategoria) values("Video 2", "describe 2", "http://google.com",2);
+insert into video(titulo,descricao,url,categoria_id) values("Video 1", "Descricao 1", "https://yahoo.com",1);
+insert into video(titulo,descricao,url,categoria_id) values("Video 2", "Descricao 2", "https://google.com",2);

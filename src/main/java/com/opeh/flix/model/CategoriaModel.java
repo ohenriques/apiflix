@@ -20,13 +20,13 @@ public class CategoriaModel extends RepresentationModel<CategoriaModel> implemen
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	@NotEmpty(message = "O campo é obrigatório")
 	private String titulo;
 	@NotEmpty(message = "O campo é obrigatório")  
 	private String cor;
-	@OneToMany
+	@OneToMany(mappedBy = "categoria")
 	private List<VideoModel> videos;
 	
 	public Long getId() {
